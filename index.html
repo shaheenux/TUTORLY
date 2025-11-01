@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorly - Unlock Academic Success</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Load Fonts: Inter (main) and Poppins (logo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Define the VIBRANT BLUE color that was in the initial successful draft */
+        :root {
+            --primary-blue: #3A8CFF; /* Vibrant, bright blue */
+            --secondary-bg: #f8f9fa; /* Very light gray background */
+        }
+        .text-primary-blue { color: var(--primary-blue); }
+        .bg-primary-blue { background-color: var(--primary-blue); }
+        .border-primary-blue { border-color: var(--primary-blue); }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--secondary-bg);
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+        
+        /* Logo Font - Poppins for professional distinction */
+        .logo-font {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- GRADIENT & BUTTON STYLES --- */
+        
+        /* Subtle Gradient for Hero Background (White to light powder blue) */
+        .hero-background-gradient {
+            /* improved, subtle blue gradient and full-cover behavior */
+            background: linear-gradient(to bottom, #ffffff 0%, #f0f8ff 60%, #e6f2ff 100%);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Make the hero background full-bleed (spans the entire viewport width)
+           while keeping the inner content aligned with the page container */
+        .hero-full-bleed {
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            width: 100vw;
+            box-sizing: border-box;
+            /* match main container horizontal padding: px-4 sm:px-6 lg:px-8 */
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        @media (min-width: 640px) { /* sm */
+            .hero-full-bleed { padding-left: 1.5rem; padding-right: 1.5rem; }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .hero-full-bleed { padding-left: 2rem; padding-right: 2rem; }
+        }
+
+        /* Gradient for Primary Call-to-Action Button */
+        .gradient-button {
+            background-image: linear-gradient(to right, #3A8CFF, #1D6BFF);
+            box-shadow: 0 10px 20px -5px rgba(58, 140, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .gradient-button:hover {
+            background-image: linear-gradient(to right, #1D6BFF, #3A8CFF);
+            transform: scale(1.02);
+            box-shadow: 0 12px 25px -5px rgba(29, 107, 255, 0.5);
+        }
+
+        /* --- DYNAMIC LINK STYLING --- */
+        .nav-link {
+            transition: color 0.3s, font-weight 0.3s;
+        }
+        .nav-link.active-link {
+            color: var(--primary-blue);
+            font-weight: 700; /* Bold */
+        }
+
+        /* --- FLOATING CARD ANIMATION --- */
+        @keyframes float {
+            0% { transform: translatey(0px); }
+            50% { transform: translatey(-10px); }
+            100% { transform: translatey(0px); }
+        }
+
+        .floating-card {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* --- LOGO BOUNCE ANIMATION --- */
+        @keyframes logo-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); } /* Subtle vertical lift */
+        }
+        
+        .animate-logo {
+            animation: logo-bounce 2s ease-in-out infinite;
+        }
+
+        /* --- NEW: GLITTER EFFECT FOR SOCIAL LINKS --- */
+        .social-link-glitter {
+            transition: all 0.3s ease;
+            display: inline-block; /* Required for transform and text-shadow */
+        }
+        .social-link-glitter:hover {
+            color: var(--primary-blue); /* Change icon color */
+            transform: scale(1.15); /* Slightly bigger scale for glitter feel */
+            /* Subtle glow effect */
+            text-shadow: 0 0 8px rgba(58, 140, 255, 0.9), 0 0 15px rgba(58, 140, 255, 0.4);
+        }
+
+        /* Header nav links and footer links: simple color change only (no glitter, no transform) */
+        .nav-link,
+        footer a {
+            transition: color 0.22s ease;
+            display: inline-block;
+        }
+        .nav-link:hover,
+        footer a:hover {
+            color: var(--primary-blue);
+            text-shadow: none;
+            transform: none;
+        }
+
+        /* --- UNIFIED BLUE-SHADOW HOVER FOR CARDS --- */
+        /* Override Tailwind utility hover shadows with a blue lift across .shadow-xl / .shadow-2xl and floating cards */
+        .shadow-xl,
+        .shadow-2xl,
+        .floating-card {
+            transition: box-shadow 0.28s ease, transform 0.28s ease;
+        }
+
+        .shadow-xl:hover,
+        .floating-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 60px -20px rgba(58,140,255,0.25), 0 12px 24px rgba(58,140,255,0.09);
+        }
+
+        .shadow-2xl:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px -14px rgba(58,140,255,0.20), 0 8px 18px rgba(58,140,255,0.07);
+        }
+
+        /* Explicit "blue-lift" utility to ensure consistent blue hover across all card-like elements */
+        .blue-lift {
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+            will-change: transform, box-shadow;
+        }
+        .blue-lift:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 60px -20px rgba(58,140,255,0.25), 0 12px 24px rgba(58,140,255,0.09);
+        }
+        
+        /* --- FAQ: collapse by default and animate when opened --- */
+        .faq-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.35s ease, opacity 0.28s ease, padding 0.28s ease;
+            padding-top: 0;
+        }
+        .faq-accordion-item.open .faq-accordion-content {
+            max-height: 1000px;
+            opacity: 1;
+            padding-top: 0.75rem;
+        }
+        .faq-icon { transition: transform 0.28s ease; }
+        .faq-accordion-item.open .faq-icon { transform: rotate(180deg); }
+        
+        /* --- SECTION ENTRANCE ANIMATION --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-section-load {
+            opacity: 0; /* Initial state hidden */
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Custom easing for a smooth bounce/slide */
+        }
+        
+        /* Staggered delays */
+        #services { animation-delay: 0.1s; }
+        #tutors { animation-delay: 0.2s; }
+        #testimonials { animation-delay: 0.3s; }
+        #faq { animation-delay: 0.4s; }
+        #contact { animation-delay: 0.5s; }
+
+        /* --- LOGO ICON: consistent spacing & vertical alignment --- */
+        .logo-icon {
+            display: inline-block;
+            width: 1.5rem; /* matches the w-6 utility */
+            height: 1.5rem; /* matches the h-6 utility */
+            line-height: 1;
+            margin: 0 0.125rem; /* small equal left/right spacing (2px) */
+            vertical-align: middle;
+            transform: translateY(0.5px); /* tiny nudge to center against text */
+        }
+
+        /* Review section specific styles - FIXED */
+        .review-card {
+            width: 100%; /* Full width for vertical layout */
+            flex-shrink: 0;
+        }
+        
+        /* Remove horizontal scrolling styles */
+        .reviews-container {
+            scroll-behavior: auto;
+            scroll-snap-type: none;
+        }
+        
+        /* Hide scrollbar for cleaner look */
+        .reviews-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .reviews-container {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* Hide additional reviews initially */
+        .review-hidden {
+            display: none;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s;
+        }
+        
+        .mobile-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo (Serves as Home Link) - tightened spacing to match footer -->
+                <a href="#home-content" onclick="switchView('home-content')" class="flex items-center group">
+                    <span class="text-3xl font-bold text-primary-blue logo-font transition duration-300">Tut</span>
+                    <!-- Icon: use .logo-icon for consistent spacing/alignment -->
+                    <i data-lucide="graduation-cap"
+                       class="logo-icon text-primary-blue transition duration-300 group-hover:scale-105 animate-logo"
+                       aria-hidden="true"></i>
+                    <span class="text-3xl font-bold text-primary-blue logo-font transition duration-300">rly</span>
+                </a>
+                
+                <!-- Navigation Links - Updated to redirect to actual pages -->
+                <nav class="hidden md:flex space-x-6 text-gray-600 font-medium">
+                    <a href="#home-content" class="nav-link hover:text-primary-blue transition duration-150" onclick="switchView('home-content')">Home</a>
+                    <a href="#services-content" class="nav-link hover:text-primary-blue transition duration-150" onclick="switchView('services-content')">Services</a>
+                    <a href="#tutors-content" class="nav-link hover:text-primary-blue transition duration-150" onclick="switchView('tutors-content')">Tutors</a>
+                    <a href="#reviews-content" class="nav-link hover:text-primary-blue transition duration-150" onclick="switchView('reviews-content')">Reviews</a>
+                    <a href="#faq-content" class="nav-link hover:text-primary-blue transition duration-150" onclick="switchView('faq-content')">FAQ</a>
+                    <a href="#contact-content" class="nav-link hover:text-primary-blue transition duration-150" onclick="switchView('contact-content')">Contact</a>
+                </nav>
+                
+                <!-- CTA Button (Made effective to scroll to contact) -->
+                <a href="#contact-content" onclick="switchView('contact-content')" class="hidden md:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-md text-white bg-primary-blue hover:bg-blue-700 transition duration-300">
+                    Get Started <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-primary-blue transition duration-150">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-overlay" class="mobile-overlay fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white shadow-xl z-50 p-6">
+            <div class="flex justify-between items-center mb-8">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-primary-blue logo-font">Tut</span>
+                    <i data-lucide="graduation-cap" class="w-5 h-5 text-primary-blue mx-1"></i>
+                    <span class="text-2xl font-bold text-primary-blue logo-font">rly</span>
+                </div>
+                <button id="mobile-menu-close" class="text-gray-500 hover:text-primary-blue">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <nav class="flex flex-col space-y-4">
+                <a href="#home-content" class="text-lg font-medium text-gray-700 hover:text-primary-blue py-2 transition duration-150" onclick="switchView('home-content'); closeMobileMenu()">Home</a>
+                <a href="#services-content" class="text-lg font-medium text-gray-700 hover:text-primary-blue py-2 transition duration-150" onclick="switchView('services-content'); closeMobileMenu()">Services</a>
+                <a href="#tutors-content" class="text-lg font-medium text-gray-700 hover:text-primary-blue py-2 transition duration-150" onclick="switchView('tutors-content'); closeMobileMenu()">Tutors</a>
+                <a href="#reviews-content" class="text-lg font-medium text-gray-700 hover:text-primary-blue py-2 transition duration-150" onclick="switchView('reviews-content'); closeMobileMenu()">Reviews</a>
+                <a href="#faq-content" class="text-lg font-medium text-gray-700 hover:text-primary-blue py-2 transition duration-150" onclick="switchView('faq-content'); closeMobileMenu()">FAQ</a>
+                <a href="#contact-content" class="text-lg font-medium text-gray-700 hover:text-primary-blue py-2 transition duration-150" onclick="switchView('contact-content'); closeMobileMenu()">Contact</a>
+                
+                <div class="pt-4 border-t border-gray-200">
+                    <a href="#contact-content" onclick="switchView('contact-content'); closeMobileMenu()" class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-full shadow-md text-white bg-primary-blue hover:bg-blue-700 transition duration-300">
+                        Get Started <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- HOME/HERO SECTION - Contains all scrollable marketing sections -->
+        <section id="home-content" class="page-content block">
+            <!-- Hero Section -->
+            <div class="pt-20 md:pt-32 pb-16 hero-background-gradient hero-full-bleed overflow-hidden">
+                <!-- keep background full-bleed but constrain inner content -->
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+                    <!-- Left Content Column -->
+                    <div class="z-10 animate-section-load" style="animation-delay: 0s;">
+                        <!-- Constrain hero text column for better layout across screen sizes -->
+                        <div class="max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl">
+                        <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 leading-tight mb-4">
+                            Unlock Your <span class="text-primary-blue block">Academic Potential</span>
+                        </h1>
+                        <p class="text-xl text-gray-600 mb-10">
+                            Connect with expert tutors who are passionate about helping you succeed. Personalized learning experiences that adapt to your unique style and goals.
+                        </p>
+                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <!-- Primary CTA Button (Made effective) -->
+                            <a href="#contact-content" onclick="switchView('contact-content')" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-full text-white gradient-button text-center">
+                                Start Learning Today <i data-lucide="arrow-right" class="w-6 h-6 ml-2"></i>
+                            </a>
+                            <!-- Learn More button (Made effective) -->
+                            <a href="#services-content" onclick="switchView('services-content')" class="inline-flex items-center justify-center px-8 py-4 border border-primary-blue text-lg font-medium rounded-full text-primary-blue bg-white hover:bg-primary-blue/10 transition duration-300 text-center">
+                                Learn More
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+ 
+                     <!-- Right Card Container -->
+                     <div class="flex justify-center mt-12 lg:mt-0 z-0 animate-section-load" style="animation-delay: 0.1s;">
+                        <div class="floating-card blue-lift w-full max-w-sm bg-white p-6 md:p-8 rounded-3xl shadow-2xl transition duration-500 border border-gray-100">
+                            <!-- Header: Metrics title + Success Rate -->
+                            <div class="flex items-start justify-between mb-4 pb-3 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <i data-lucide="line-chart" class="w-7 h-7 text-primary-blue mr-3"></i>
+                                    <span class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Tutorly Metrics</span>
+                                </div>
+                                <!-- Success rate badge -->
+                                <div class="text-right">
+                                    <div class="text-xs text-gray-500">Success Rate</div>
+                                    <div class="text-2xl font-extrabold text-primary-blue leading-tight">98% <span class="text-xs text-gray-400 font-medium">current</span></div>
+                                    <div class="w-24 h-2 bg-gray-100 rounded-full mt-2 overflow-hidden" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100" aria-label="Success rate">
+                                        <div class="bg-primary-blue h-2 rounded-full" style="width:98%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stat: Total Enrollment -->
+                            <div class="mb-4 p-3 bg-gray-50 rounded-lg border-l-4 border-primary-blue/50">
+                                <p class="text-3xl md:text-4xl font-extrabold text-primary-blue mb-1">2,500+</p>
+                                <h3 class="text-base md:text-lg font-semibold text-gray-800">Total Student Enrollment</h3>
+                                <span class="text-xs text-gray-500">Students actively enrolled globally.</span>
+                            </div>
+
+                            <!-- Stat: Weekly Hours -->
+                            <div class="mb-4 p-3 bg-gray-50 rounded-lg border-l-4 border-primary-blue/50">
+                                <p class="text-3xl md:text-4xl font-extrabold text-primary-blue mb-1">10,000+</p>
+                                <h3 class="text-base md:text-lg font-semibold text-gray-800">Weekly Instructional Hours</h3>
+                                <span class="text-xs text-gray-500">Dedicated instructional time per week.</span>
+                            </div>
+
+                            <!-- CTA -->
+                            <a href="#contact-content" onclick="switchView('contact-content')" class="block w-full mt-4 py-3 gradient-button text-white text-base font-semibold rounded-xl text-center transition duration-300">Get Personalized Plan</a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+            
+            <!-- SERVICES SECTION ON HOME PAGE -->
+            <section id="home-services" class="py-20">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h2 class="text-4xl font-bold text-gray-900 mb-3">Our Tutoring Services</h2>
+                        <p class="text-gray-600 max-w-3xl mx-auto">Comprehensive learning options designed to help you achieve your academic goals with confidence and success.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- Card 1: One-on-one Tutoring -->
+                        <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:border-primary-blue">
+                            <!-- Updated Heading with Icon on Right -->
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-gray-900 mt-0">One-on-one Tutoring</h3>
+                                <i data-lucide="user-check" class="w-6 h-6 text-primary-blue"></i>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">Lessons tailored to your learning style and pace.</p>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Personalized curriculum</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Customized homework</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Progress tracking</li>
+                            </ul>
+                        </div>
+
+                        
+                        <!-- Card 2: Group Sessions -->
+                        <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:border-primary-blue">
+                            <!-- Updated Heading with Icon on Right -->
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-xl font-bold text-gray-900 mt-0">Group Sessions</h3>
+                                <i data-lucide="users" class="w-6 h-6 text-primary-blue"></i>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">Learn alongside peers while building confidence.</p>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Small class sizes</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Collaborative learning</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Cost effective</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <a href="#services-content" onclick="switchView('services-content')" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-md text-white bg-primary-blue hover:bg-blue-700 transition duration-300">
+                            See All Services <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- TUTORS SECTION ON HOME PAGE -->
+            <section id="home-tutors" class="py-20 bg-gray-50">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h2 class="text-4xl font-bold text-gray-900 mb-3">Our Tutors</h2>
+                        <p class="text-gray-600 max-w-3xl mx-auto">Certified experts across STEM, humanities, and test preparation — matched to your learning goals.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- 3 Tutor Cards -->
+                        <div class="bg-white p-6 rounded-2xl shadow-xl blue-lift border border-gray-100 text-center">
+                            <img src="https://placehold.co/120x120/3A8CFF/ffffff?text=AJ" alt="Ava Johnson" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary-blue/40">
+                            <h3 class="text-xl font-bold text-gray-900">Ava Johnson</h3>
+                            <p class="text-primary-blue font-medium mb-2">Calculus & Statistics</p>
+                            <p class="text-sm text-gray-600 mb-3">Ph.D. in Applied Mathematics. Focus on conceptual understanding and exam strategy.</p>
+                            <div class="text-sm text-gray-500">7 yrs experience • $60/hr</div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl shadow-xl blue-lift border border-gray-100 text-center">
+                            <img src="https://placehold.co/120x120/FFD5A5/3A8CFF?text=ES" alt="Emily Sanchez" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary-blue/40">
+                            <h3 class="text-xl font-bold text-gray-900">Emily Sanchez</h3>
+                            <p class="text-primary-blue font-medium mb-2">English & Essay Coaching</p>
+                            <p class="text-sm text-gray-600 mb-3">M.Ed. in Curriculum. College essay and critical analysis specialist.</p>
+                            <div class="text-sm text-gray-500">6 yrs experience • $55/hr</div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl shadow-xl blue-lift border border-gray-100 text-center">
+                            <img src="https://placehold.co/120x120/A5FFC4/3A8CFF?text=JC" alt="John Chen" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary-blue/40">
+                            <h3 class="text-xl font-bold text-gray-900">Dr. John Chen</h3>
+                            <p class="text-primary-blue font-medium mb-2">AP Physics & Chemistry</p>
+                            <p class="text-sm text-gray-600 mb-3">University lecturer with lab and AP exam coaching expertise.</p>
+                            <div class="text-sm text-gray-500">10 yrs experience • $75/hr</div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-12">
+                        <a href="#tutors-content" onclick="switchView('tutors-content')" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-md text-white bg-primary-blue hover:bg-blue-700 transition duration-300">
+                            See All Tutors <i data-lucide="users" class="w-4 h-4 ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- REVIEWS SECTION ON HOME PAGE -->
+            <section id="home-reviews" class="py-20">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h2 class="text-4xl font-bold text-gray-900 mb-3">Student Reviews</h2>
+                        <p class="text-gray-600 max-w-3xl mx-auto">Hear directly from students who achieved their goals with personalized guidance from Tutorly.</p>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-3">What Our Students Say</h3>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Review Card 1 -->
+                        <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                            <div class="flex items-start mb-4">
+                                <div class="flex">
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                </div>
+                            </div>
+                            <p class="italic text-gray-700 mb-4">"My grade in Calculus went from a B- to an A in just one semester. The tutoring was incredibly focused and made complex topics feel simple. Tutorly changed my trajectory!"</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/50x50/3A8CFF/fff?text=L" class="w-10 h-10 rounded-full mr-3">
+                                <div>
+                                    <p class="font-semibold">Liam R.</p>
+                                    <p class="text-sm text-gray-500">High School Senior</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review Card 2 -->
+                        <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                            <div class="flex items-start mb-4">
+                                <div class="flex">
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                </div>
+                            </div>
+                            <p class="italic text-gray-700 mb-4">"I raised my SAT score by 150 points after working with my Tutorly mentor. Their strategies for test anxiety and time management were just as valuable as the subject knowledge."</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/50x50/3A8CFF/fff?text=S" class="w-10 h-10 rounded-full mr-3">
+                                <div>
+                                    <p class="font-semibold">Sarah M.</p>
+                                    <p class="text-sm text-gray-500">College Applicant</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review Card 3 -->
+                        <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                            <div class="flex items-start mb-4">
+                                <div class="flex">
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                </div>
+                            </div>
+                            <p class="italic text-gray-700 mb-4">"The one-on-one attention helped me understand concepts I struggled with for years. My tutor was patient and explained things in multiple ways until it clicked."</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/50x50/3A8CFF/fff?text=J" class="w-10 h-10 rounded-full mr-3">
+                                <div>
+                                    <p class="font-semibold">Jessica T.</p>
+                                    <p class="text-sm text-gray-500">College Student</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <a href="#reviews-content" onclick="switchView('reviews-content')" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-md text-white bg-primary-blue hover:bg-blue-700 transition duration-300">
+                            See More Reviews <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- FAQ SECTION ON HOME PAGE -->
+            <section id="home-faq" class="py-20 bg-gray-50">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h2 class="text-4xl font-bold text-gray-900 mb-3">Frequently Asked Questions</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Find quick answers to the most common questions about our services, tutors, and scheduling.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- FAQ Item 1 -->
+                        <div class="faq-accordion-item bg-white p-6 rounded-xl shadow-md border border-gray-100 blue-lift">
+                            <div class="faq-accordion-header flex justify-between items-center" onclick="toggleFaq(this)">
+                                <h3 class="text-lg font-semibold text-gray-800">What subjects do you cover?</h3>
+                                <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-primary-blue transition-transform duration-300"></i>
+                            </div>
+                            <div class="faq-accordion-content text-gray-600">
+                                We cover all core academic subjects from middle school through university level, including AP/IB preparation. Our specialties include Advanced Mathematics (Calculus, Algebra, Statistics), Sciences (Biology, Chemistry, Physics), English Language Arts, and standardized test prep (SAT, ACT).
+                            </div>
+                        </div>
+                        
+                        <!-- FAQ Item 2 -->
+                        <div class="faq-accordion-item bg-white p-6 rounded-xl shadow-md border border-gray-100 blue-lift">
+                            <div class="faq-accordion-header flex justify-between items-center" onclick="toggleFaq(this)">
+                                <h3 class="text-lg font-semibold text-gray-800">How do I choose the right tutor?</h3>
+                                <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-primary-blue transition-transform duration-300"></i>
+                            </div>
+                            <div class="faq-accordion-content text-gray-600">
+                                Our academic coordinators use a detailed matching process based on your student's needs, learning style, and personality. You can also view our tutor profiles in the "Meet Our Certified Experts" section to learn about their background and specialties before requesting a session.
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div class="faq-accordion-item bg-white p-6 rounded-xl shadow-md border border-gray-100 blue-lift">
+                            <div class="faq-accordion-header flex justify-between items-center" onclick="toggleFaq(this)">
+                                <h3 class="text-lg font-semibold text-gray-800">Are sessions only held online?</h3>
+                                <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-primary-blue transition-transform duration-300"></i>
+                            </div>
+                            <div class="faq-accordion-content text-gray-600">
+                                While most of our sessions are conducted online through our interactive virtual classroom, we offer in-person tutoring in select metropolitan areas. Please contact us to check for in-person availability in your region.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <a href="#faq-content" onclick="switchView('faq-content')" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-md text-white bg-primary-blue hover:bg-blue-700 transition duration-300">
+                            See All FAQs <i data-lucide="help-circle" class="w-4 h-4 ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- CONTACT FORM ON HOME PAGE -->
+            <section id="home-contact" class="py-20">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h2 class="text-4xl font-bold text-gray-900 mb-3">Contact Us</h2>
+                        <p class="text-gray-600 max-w-3xl mx-auto">Ready to start your learning journey? Get in touch with our team to discuss your specific needs and find the perfect tutor match.</p>
+                    </div>
+
+                    <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl border border-gray-100 blue-lift">
+                        <div class="max-w-2xl mx-auto">
+                            <h3 class="text-3xl font-bold text-gray-900 mb-4">Send Us a Message</h3>
+                            <p class="text-gray-600 mb-8">Fill out the form below and one of our academic coordinators will reach out to discuss your specific needs within one business day.</p>
+                            
+                            <!-- Form submission is now handled by JS to show confirmation -->
+                            <form id="home-contact-form" class="space-y-4">
+                                <div>
+                                    <label for="home-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                    <input type="text" id="home-name" name="name" placeholder="John Doe" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150">
+                                </div>
+                                <div>
+                                    <label for="home-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                    <input type="email" id="home-email" name="email" placeholder="you@example.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150">
+                                </div>
+                                <div>
+                                    <label for="home-subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                    <select id="home-subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150">
+                                        <option value="">Select a subject</option>
+                                        <option value="math">Mathematics</option>
+                                        <option value="science">Science</option>
+                                        <option value="english">English/Literature</option>
+                                        <option value="test-prep">Test Preparation</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="home-message" class="block text-sm font-medium text-gray-700 mb-1">How can we help you?</label>
+                                    <textarea id="home-message" name="message" rows="4" placeholder="I need help with AP Physics..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150"></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-3 gradient-button text-white text-lg font-semibold rounded-xl transition duration-300">
+                                    Submit Inquiry
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- SERVICES PAGE (Standalone) -->
+        <section id="services-content" class="page-content hidden py-20">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-10">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-3">Our Tutoring Services</h1>
+                    <p class="text-gray-600 max-w-3xl mx-auto">Comprehensive learning options designed to help you achieve your academic goals with confidence and success.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Card 1: One-on-one Tutoring -->
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:border-primary-blue">
+                        <!-- Updated Heading with Icon on Right -->
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 mt-0">One-on-one Tutoring</h3>
+                            <i data-lucide="user-check" class="w-6 h-6 text-primary-blue"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4">Lessons tailored to your learning style and pace.</p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Personalized curriculum</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Customized homework</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Progress tracking</li>
+                        </ul>
+                    </div>
+
+                    
+                    <!-- Card 2: Group Sessions -->
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:border-primary-blue">
+                        <!-- Updated Heading with Icon on Right -->
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 mt-0">Group Sessions</h3>
+                            <i data-lucide="users" class="w-6 h-6 text-primary-blue"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4">Learn alongside peers while building confidence.</p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Small class sizes</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Collaborative learning</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Cost effective</li>
+                        </ul>
+                    </div>
+
+                    
+                    <!-- Card 3: Flexible Scheduling -->
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:border-primary-blue">
+                        <!-- Updated Heading with Icon on Right -->
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 mt-0">Flexible Scheduling</h3>
+                            <i data-lucide="clock" class="w-6 h-6 text-primary-blue"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4">Tutoring available around the clock to fit your schedule.</p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>24/7 availability</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Weekend tutoring</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Instant sessions</li>
+                        </ul>
+                    </div>
+
+                    
+                    <!-- Card 4: Special Exams Preparation -->
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:border-primary-blue">
+                        <!-- Updated Heading with Icon on Right -->
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-gray-900 mt-0">Special Exams Preparation</h3>
+                            <i data-lucide="award" class="w-6 h-6 text-primary-blue"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4">Focused preparation for standardized and advanced placement tests.</p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>SAT/ACT/GRE strategies</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>AP and IB exam readiness</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>College admissions help</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="#contact-content" onclick="switchView('contact-content')" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-md text-white bg-primary-blue hover:bg-blue-700 transition duration-300">
+                        Get Started Today <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tutors Page (Standalone) -->
+        <section id="tutors-content" class="page-content hidden py-20">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-10">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-3">Our Tutors</h1>
+                    <p class="text-gray-600 max-w-3xl mx-auto">Certified experts across STEM, humanities, and test preparation — matched to your learning goals. Browse profiles and request sessions directly.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 6 Tutor Cards -->
+                    <div class="bg-white p-6 rounded-2xl shadow-xl blue-lift border border-gray-100 text-center">
+                        <img src="https://placehold.co/120x120/3A8CFF/ffffff?text=AJ" alt="Ava Johnson" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary-blue/40">
+                        <h3 class="text-xl font-bold text-gray-900">Ava Johnson</h3>
+                        <p class="text-primary-blue font-medium mb-2">Calculus & Statistics</p>
+                        <p class="text-sm text-gray-600 mb-3">Ph.D. in Applied Mathematics. Focus on conceptual understanding and exam strategy.</p>
+                        <div class="text-sm text-gray-500">7 yrs experience • $60/hr</div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-xl blue-lift border border-gray-100 text-center">
+                        <img src="https://placehold.co/120x120/FFD5A5/3A8CFF?text=ES" alt="Emily Sanchez" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary-blue/40">
+                        <h3 class="text-xl font-bold text-gray-900">Emily Sanchez</h3>
+                        <p class="text-primary-blue font-medium mb-2">English & Essay Coaching</p>
+                        <p class="text-sm text-gray-600 mb-3">M.Ed. in Curriculum. College essay and critical analysis specialist.</p>
+                        <div class="text-sm text-gray-500">6 yrs experience • $55/hr</div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-xl blue-lift border border-gray-100 text-center">
+                        <img src="https://placehold.co/120x120/A5FFC4/3A8CFF?text=JC" alt="John Chen" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary-blue/40">
+                        <h3 class="text-xl font-bold text-gray-900">Dr. John Chen</h3>
+                        <p class="text-primary-blue font-medium mb-2">AP Physics & Chemistry</p>
+                        <p class="text-sm text-gray-600 mb-3">University lecturer with lab and AP exam coaching expertise.</p>
+                        <div class="text-sm text-gray-500">10 yrs experience • $75/hr</div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-xl blue-lift border border-gray-100 text-center">
+                        <img src="https://placehold.co/120x120/D5E5FF/3A8CFF?text=SF" alt="Sofia Flores" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary-blue/40">
+                        <h3 class="text-xl font-bold text-gray-900">Sofia Flores</h3>
+                        <p class="text-primary-blue font-medium mb-2">Spanish & Language Arts</p>
+                        <p class="text-sm text-gray-600 mb-3">Bilingual instructor for language fluency and grammar.</p>
+                        <div class="text-sm text-gray-500">5 yrs experience • $50/hr</div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-xl blue-lift border border-gray-100 text-center">
+                        <img src="https://placehold.co/120x120/FFDFD5/3A8CFF?text=PT" alt="Peter Thompson" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary-blue/40">
+                        <h3 class="text-xl font-bold text-gray-900">Peter Thompson</h3>
+                        <p class="text-primary-blue font-medium mb-2">Economics & Finance</p>
+                        <p class="text-sm text-gray-600 mb-3">Real-world examples and test practice for IB/Econ APs.</p>
+                        <div class="text-sm text-gray-500">11 yrs experience • $80/hr</div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-xl blue-lift border border-gray-100 text-center">
+                        <img src="https://placehold.co/120x120/E5D5FF/3A8CFF?text=RG" alt="Robert Green" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary-blue/40">
+                        <h3 class="text-xl font-bold text-gray-900">Robert Green</h3>
+                        <p class="text-primary-blue font-medium mb-2">Computer Science & Programming</p>
+                        <p class="text-sm text-gray-600 mb-3">Industry professional with 8+ years in software development and teaching.</p>
+                        <div class="text-sm text-gray-500">8 yrs experience • $70/hr</div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="#contact-content" onclick="switchView('contact-content')" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-md text-white bg-primary-blue hover:bg-blue-700 transition duration-300">
+                        Book a Session <i data-lucide="calendar" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Page (Standalone) - FIXED -->
+        <section id="reviews-content" class="page-content hidden py-20">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-10">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-3">Student Reviews</h1>
+                    <p class="text-gray-600 max-w-3xl mx-auto">Hear directly from students who achieved their goals with personalized guidance from Tutorly.</p>
+                </div>
+
+                <div id="reviews-container" class="space-y-6 reviews-container">
+                    <!-- Review Card 1 -->
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"My grade in Calculus went from a B- to an A in just one semester. The tutoring was incredibly focused and made complex topics feel simple. Tutorly changed my trajectory!"</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=L" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Liam R.</p>
+                                <p class="text-sm text-gray-500">High School Senior</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Card 2 -->
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"I raised my SAT score by 150 points after working with my Tutorly mentor. Their strategies for test anxiety and time management were just as valuable as the subject knowledge."</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=S" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Sarah M.</p>
+                                <p class="text-sm text-gray-500">College Applicant</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Card 3 -->
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"The one-on-one attention helped me understand concepts I struggled with for years. My tutor was patient and explained things in multiple ways until it clicked."</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=J" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Jessica T.</p>
+                                <p class="text-sm text-gray-500">College Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Card 4 -->
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"Flexible scheduling made it possible to balance school, work, and tutoring sessions. I could schedule sessions around my part-time job without stress."</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=M" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Michael B.</p>
+                                <p class="text-sm text-gray-500">Working Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Card 5 -->
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"My confidence in math has grown tremendously thanks to my tutor's patience and expertise. I went from dreading math class to actually enjoying it!"</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=S" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Sophia L.</p>
+                                <p class="text-sm text-gray-500">High School Junior</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional 5 reviews for the standalone page -->
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"The group sessions were amazing! Learning with peers made difficult concepts easier to understand and the collaborative environment was very motivating."</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=K" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Kevin P.</p>
+                                <p class="text-sm text-gray-500">University Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"I was struggling with Chemistry for months until I found Tutorly. My tutor broke down complex topics into manageable pieces and now I'm acing my exams!"</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=R" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Rachel W.</p>
+                                <p class="text-sm text-gray-500">High School Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"As a working professional going back to school, the flexible scheduling was a lifesaver. I could fit sessions around my work schedule without any stress."</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=D" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">David M.</p>
+                                <p class="text-sm text-gray-500">Graduate Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"The test prep for my SAT was outstanding. My tutor not only taught me the material but also test-taking strategies that boosted my confidence and score."</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=A" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Amanda T.</p>
+                                <p class="text-sm text-gray-500">College Applicant</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"I was hesitant about online tutoring at first, but the virtual classroom was so interactive and easy to use. It felt just like being in person!"</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=E" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Ethan L.</p>
+                                <p class="text-sm text-gray-500">High School Student</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional 2 reviews that will be hidden initially -->
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift review-hidden">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"The progress tracking feature helped me see my improvement over time, which was incredibly motivating. I could actually see my skills developing!"</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=N" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Nicole K.</p>
+                                <p class="text-sm text-gray-500">College Freshman</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-primary-blue blue-lift review-hidden">
+                        <div class="flex items-start mb-4">
+                            <div class="flex">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-current"></i>
+                            </div>
+                        </div>
+                        <p class="italic text-gray-700 mb-4">"My tutor was so patient and really understood how to explain concepts in a way that made sense to me. I went from failing to getting a B+ in just two months!"</p>
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/50x50/3A8CFF/fff?text=T" class="w-10 h-10 rounded-full mr-3">
+                            <div>
+                                <p class="font-semibold">Thomas R.</p>
+                                <p class="text-sm text-gray-500">High School Sophomore</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <button id="load-more-reviews" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-md text-white bg-primary-blue hover:bg-blue-700 transition duration-300">
+                        Load More Reviews <i data-lucide="plus" class="w-4 h-4 ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Review Submission Form -->
+                <div class="mt-20 bg-white p-8 md:p-12 rounded-3xl shadow-2xl border border-gray-100 blue-lift">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4">Share Your Experience</h3>
+                        <p class="text-gray-600 mb-8">We value your feedback. Share your experience with Tutorly to help other students make informed decisions.</p>
+                        
+                        <form id="review-form" class="space-y-4">
+                            <div>
+                                <label for="review-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <input type="text" id="review-name" name="name" placeholder="John Doe" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150">
+                            </div>
+                            <div>
+                                <label for="review-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <input type="email" id="review-email" name="email" placeholder="you@example.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                                <div class="flex space-x-1" id="star-rating">
+                                    <i data-lucide="star" class="w-6 h-6 text-gray-300 cursor-pointer" data-rating="1"></i>
+                                    <i data-lucide="star" class="w-6 h-6 text-gray-300 cursor-pointer" data-rating="2"></i>
+                                    <i data-lucide="star" class="w-6 h-6 text-gray-300 cursor-pointer" data-rating="3"></i>
+                                    <i data-lucide="star" class="w-6 h-6 text-gray-300 cursor-pointer" data-rating="4"></i>
+                                    <i data-lucide="star" class="w-6 h-6 text-gray-300 cursor-pointer" data-rating="5"></i>
+                                </div>
+                                <input type="hidden" id="rating-value" name="rating" value="0">
+                            </div>
+                            <div>
+                                <label for="review-message" class="block text-sm font-medium text-gray-700 mb-1">Your Review</label>
+                                <textarea id="review-message" name="message" rows="4" placeholder="Share your experience with Tutorly..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3 gradient-button text-white text-lg font-semibold rounded-xl transition duration-300">
+                                Submit Review
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Page (Standalone) -->
+        <section id="faq-content" class="page-content hidden py-20">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-10">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-3">Frequently Asked Questions</h1>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Find quick answers to the most common questions about our services, tutors, and scheduling.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-accordion-item bg-white p-6 rounded-xl shadow-md border border-gray-100 blue-lift">
+                        <div class="faq-accordion-header flex justify-between items-center" onclick="toggleFaq(this)">
+                            <h3 class="text-lg font-semibold text-gray-800">What subjects do you cover?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-primary-blue transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-accordion-content text-gray-600">
+                            We cover all core academic subjects from middle school through university level, including AP/IB preparation. Our specialties include Advanced Mathematics (Calculus, Algebra, Statistics), Sciences (Biology, Chemistry, Physics), English Language Arts, and standardized test prep (SAT, ACT).
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-accordion-item bg-white p-6 rounded-xl shadow-md border border-gray-100 blue-lift">
+                        <div class="faq-accordion-header flex justify-between items-center" onclick="toggleFaq(this)">
+                            <h3 class="text-lg font-semibold text-gray-800">How do I choose the right tutor?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-primary-blue transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-accordion-content text-gray-600">
+                            Our academic coordinators use a detailed matching process based on your student's needs, learning style, and personality. You can also view our tutor profiles in the "Meet Our Certified Experts" section to learn about their background and specialties before requesting a session.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-accordion-item bg-white p-6 rounded-xl shadow-md border border-gray-100 blue-lift">
+                        <div class="faq-accordion-header flex justify-between items-center" onclick="toggleFaq(this)">
+                            <h3 class="text-lg font-semibold text-gray-800">Are sessions only held online?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-primary-blue transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-accordion-content text-gray-600">
+                            While most of our sessions are conducted online through our interactive virtual classroom, we offer in-person tutoring in select metropolitan areas. Please contact us to check for in-person availability in your region.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-accordion-item bg-white p-6 rounded-xl shadow-md border border-gray-100 blue-lift">
+                        <div class="faq-accordion-header flex justify-between items-center" onclick="toggleFaq(this)">
+                            <h3 class="text-lg font-semibold text-gray-800">What is your cancellation policy?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-primary-blue transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-accordion-content text-gray-600">
+                            We require a minimum of 24 hours notice for any session cancellation or rescheduling. Cancellations made with less than 24 hours notice may result in a charge for the full session time, as our tutors reserve that time specifically for you.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-accordion-item bg-white p-6 rounded-xl shadow-md border border-gray-100 blue-lift">
+                        <div class="faq-accordion-header flex justify-between items-center" onclick="toggleFaq(this)">
+                            <h3 class="text-lg font-semibold text-gray-800">How do payments work?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-primary-blue transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-accordion-content text-gray-600">
+                            We offer flexible payment options including pay-per-session, monthly packages, and semester plans. All major credit cards, PayPal, and bank transfers are accepted. You'll receive an invoice after each session with detailed breakdown of charges.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 6 -->
+                    <div class="faq-accordion-item bg-white p-6 rounded-xl shadow-md border border-gray-100 blue-lift">
+                        <div class="faq-accordion-header flex justify-between items-center" onclick="toggleFaq(this)">
+                            <h3 class="text-lg font-semibold text-gray-800">Do you offer group discounts?</h3>
+                            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-primary-blue transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-accordion-content text-gray-600">
+                            Yes! We offer special pricing for group sessions and family packages. For groups of 3 or more students, you'll receive a 15% discount. Additionally, families with multiple students receive a 10% discount on all sessions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page (Standalone) - Updated with only the form -->
+        <section id="contact-content" class="page-content hidden py-20">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-10">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-3">Contact Us</h1>
+                    <p class="text-gray-600 max-w-3xl mx-auto">Ready to start your learning journey? Get in touch with our team to discuss your specific needs and find the perfect tutor match.</p>
+                </div>
+
+                <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl border border-gray-100 blue-lift">
+                     <div class="max-w-2xl mx-auto">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Send Us a Message</h2>
+                        <p class="text-gray-600 mb-8">Fill out the form below and one of our academic coordinators will reach out to discuss your specific needs within one business day.</p>
+                        
+                        <!-- Form submission is now handled by JS to show confirmation -->
+                        <form id="contact-form" class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="John Doe" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="you@example.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150">
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                <select id="subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150">
+                                    <option value="">Select a subject</option>
+                                    <option value="math">Mathematics</option>
+                                    <option value="science">Science</option>
+                                    <option value="english">English/Literature</option>
+                                    <option value="test-prep">Test Preparation</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">How can we help you?</label>
+                                <textarea id="message" name="message" rows="4" placeholder="I need help with AP Physics..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition duration-150"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3 gradient-button text-white text-lg font-semibold rounded-xl transition duration-300">
+                                Submit Inquiry
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEGAL CONTENT SECTIONS (Remain hidden until clicked) -->
+        <section id="privacy-content" class="page-content hidden py-20">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl font-bold text-gray-900 mb-6 border-b-2 border-primary-blue pb-2">Privacy Policy</h1>
+                <p class="text-gray-600 mb-6">Last Updated: October 2025</p>
+                <div class="space-y-6 text-gray-700">
+                    <p>This Privacy Policy outlines how Tutorly collects, uses, maintains, and discloses information collected from users (each, a "User") of the website. This policy applies to the site and all products and services offered by Tutorly.</p>
+
+                    <h2 class="text-2xl font-semibold mt-4">1. Information Collection</h2>
+                    <p>We collect personal identification information from Users in a variety of ways, including, but not limited to, when Users enroll in a course, subscribe to a newsletter, and in connection with other activities, services, features, or resources we make available. Users may be asked for, as appropriate, name, email address, and payment information.</p>
+
+                    <h2 class="text-2xl font-semibold mt-4">2. How We Use Collected Information</h2>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>To personalize user experience.</li>
+                        <li>To process payments efficiently.</li>
+                        <li>To send periodic emails regarding updates or service-related information.</li>
+                        <li>To improve our site and educational offerings.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold mt-4">3. Data Protection</h2>
+                    <p>We adopt appropriate data collection, storage, and processing practices and security measures to protect against unauthorized access, alteration, disclosure, or destruction of your personal information, username, password, transaction information, and data stored on our Site.</p>
+                    
+                    <div class="mt-8">
+                        <a href="#home-content" onclick="switchView('home-content')" class="inline-flex items-center text-primary-blue font-semibold hover:underline">
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="terms-content" class="page-content hidden py-20">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl font-bold text-gray-900 mb-6 border-b-2 border-primary-blue pb-2">Terms of Service</h1>
+                <p class="text-gray-600 mb-6">Effective Date: October 2025</p>
+                <div class="space-y-6 text-gray-700">
+                    <p>By accessing or using the Tutorly service (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of the terms, you may not access the Service.</p>
+
+                    <h2 class="text-2xl font-semibold mt-4">1. License and Access</h2>
+                    <p>Tutorly grants you a limited, non-exclusive, non-transferable, revocable license to access and use the Service strictly in accordance with these Terms.</p>
+
+                    <h2 class="text-2xl font-semibold mt-4">2. User Responsibilities</h2>
+                    <p>You agree to use the Service only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else's use and enjoyment of the Service. Prohibited behavior includes harassing or causing distress or inconvenience to any other user, transmitting obscene or offensive content, or disrupting the normal flow of dialogue within the Service.</p>
+
+                    <h2 class="text-2xl font-semibold mt-4">3. Intellectual Property</h2>
+                    <p>The Service and its original content, features, and functionality are and will remain the exclusive property of Tutorly and its licensors. Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of Tutorly.</p>
+                    
+                    <div class="mt-8">
+                        <a href="#home-content" onclick="switchView('home-content')" class="inline-flex items-center text-primary-blue font-semibold hover:underline">
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="refund-content" class="page-content hidden py-20">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl font-bold text-gray-900 mb-6 border-b-2 border-primary-blue pb-2">Refund Policy</h1>
+                <p class="text-gray-600 mb-6">Policy Status: Active</p>
+                <div class="space-y-6 text-gray-700">
+                    <p>Tutorly is committed to customer satisfaction. Our refund policy is structured to be fair to the user while also respecting the intellectual property and costs associated with delivering educational content.</p>
+
+                    <h2 class="text-2xl font-semibold mt-4">1. 30-Day Guarantee</h2>
+                    <p>A full refund is available within 30 days of the initial course purchase, provided that the user has not consumed more than 20% of the total course material (measured by lesson completion or time spent in the platform).</p>
+
+                    <h2 class="text-2xl font-semibold mt-4">2. Non-Refundable Items</h2>
+                    <p>Refunds are not granted for courses or programs where:</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>The 30-day purchase window has passed.</li>
+                        <li>More than 20% of the content has been accessed or downloaded.</li>
+                        <li>The product is an "Instant Access" digital download explicitly marked as final sale.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold mt-4">3. Request Process</h2>
+                    <p>To request a refund, please contact our support team with your full name, email, order number, and a brief reason for the request. All refunds will be processed within 5-10 business days after approval.</p>
+                    
+                    <div class="mt-8">
+                        <a href="#home-content" onclick="switchView('home-content')" class="inline-flex items-center text-primary-blue font-semibold hover:underline">
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer - Made Responsive -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl font-bold text-primary-blue logo-font">Tut</span>
+                        <i data-lucide="graduation-cap" class="w-6 h-6 text-primary-blue mx-1"></i>
+                        <span class="text-2xl font-bold text-primary-blue logo-font">rly</span>
+                    </div>
+                    <p class="text-gray-400 mb-4 max-w-md">Empowering students to achieve academic excellence through personalized tutoring and dedicated support.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-link-glitter text-gray-400 hover:text-primary-blue">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="social-link-glitter text-gray-400 hover:text-primary-blue">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="social-link-glitter text-gray-400 hover:text-primary-blue">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="social-link-glitter text-gray-400 hover:text-primary-blue">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home-content" onclick="switchView('home-content')" class="text-gray-400 hover:text-primary-blue transition">Home</a></li>
+                        <li><a href="#services-content" onclick="switchView('services-content')" class="text-gray-400 hover:text-primary-blue transition">Services</a></li>
+                        <li><a href="#tutors-content" onclick="switchView('tutors-content')" class="text-gray-400 hover:text-primary-blue transition">Tutors</a></li>
+                        <li><a href="#reviews-content" onclick="switchView('reviews-content')" class="text-gray-400 hover:text-primary-blue transition">Reviews</a></li>
+                        <li><a href="#faq-content" onclick="switchView('faq-content')" class="text-gray-400 hover:text-primary-blue transition">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#privacy-content" onclick="switchView('privacy-content')" class="text-gray-400 hover:text-primary-blue transition">Privacy Policy</a></li>
+                        <li><a href="#terms-content" onclick="switchView('terms-content')" class="text-gray-400 hover:text-primary-blue transition">Terms of Service</a></li>
+                        <li><a href="#refund-content" onclick="switchView('refund-content')" class="text-gray-400 hover:text-primary-blue transition">Refund Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Information</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i data-lucide="mail" class="w-5 h-5 text-primary-blue flex-shrink-0 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-medium text-gray-300">Email Support</p>
+                                <p class="text-gray-400">support@tutorly.co</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-lucide="phone" class="w-5 h-5 text-primary-blue flex-shrink-0 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-medium text-gray-300">Phone Hotline</p>
+                                <p class="text-gray-400">(800) 555-TUTR</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-primary-blue flex-shrink-0 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-medium text-gray-300">Global Headquarters</p>
+                                <p class="text-gray-400">123 Learning Ave, Suite 400, Knowledge City</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-lucide="clock" class="w-5 h-5 text-primary-blue flex-shrink-0 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-medium text-gray-300">Office Hours</p>
+                                <p class="text-gray-400">Monday - Friday: 8am - 8pm EST</p>
+                                <p class="text-gray-400">Weekends: 9am - 5pm EST</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Tutorly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+        
+        // FAQ Accordion Functionality
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('open');
+        }
+
+        // Simple view switching for demo purposes
+        function switchView(viewId) {
+            // Hide all page content
+            document.querySelectorAll('.page-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected view
+            document.getElementById(viewId).classList.remove('hidden');
+            
+            // If it's the home content, scroll to top
+            if (viewId === 'home-content') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Mobile Menu Functionality
+        function openMobileMenu() {
+            document.getElementById('mobile-menu').classList.add('open');
+            document.getElementById('mobile-overlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileMenu() {
+            document.getElementById('mobile-menu').classList.remove('open');
+            document.getElementById('mobile-overlay').classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Initialize mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu button
+            document.getElementById('mobile-menu-button').addEventListener('click', openMobileMenu);
+            
+            // Mobile menu close button
+            document.getElementById('mobile-menu-close').addEventListener('click', closeMobileMenu);
+            
+            // Mobile overlay click to close
+            document.getElementById('mobile-overlay').addEventListener('click', closeMobileMenu);
+        });
+
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry! We will get back to you within one business day.');
+            this.reset();
+        });
+        
+        // Home contact form submission
+        document.getElementById('home-contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry! We will get back to you within one business day.');
+            this.reset();
+        });
+        
+        // Review form submission
+        document.getElementById('review-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for submitting your review!');
+            this.reset();
+            // Reset stars
+            const stars = document.querySelectorAll('#star-rating i');
+            stars.forEach(star => {
+                star.classList.remove('text-yellow-400', 'fill-current');
+                star.classList.add('text-gray-300');
+            });
+            document.getElementById('rating-value').value = '0';
+        });
+        
+        // Star rating functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('#star-rating i');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    document.getElementById('rating-value').value = rating;
+                    
+                    // Update star display
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('text-yellow-400', 'fill-current');
+                            s.classList.remove('text-gray-300');
+                        } else {
+                            s.classList.remove('text-yellow-400', 'fill-current');
+                            s.classList.add('text-gray-300');
+                        }
+                    });
+                });
+                
+                // Hover effect for stars
+                star.addEventListener('mouseover', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('text-yellow-300');
+                        } else {
+                            s.classList.remove('text-yellow-300');
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    const currentRating = parseInt(document.getElementById('rating-value').value);
+                    stars.forEach((s, index) => {
+                        if (index < currentRating) {
+                            s.classList.add('text-yellow-400', 'fill-current');
+                            s.classList.remove('text-yellow-300', 'text-gray-300');
+                        } else {
+                            s.classList.remove('text-yellow-300', 'text-yellow-400', 'fill-current');
+                            s.classList.add('text-gray-300');
+                        }
+                    });
+                });
+            });
+            
+            // Load more reviews functionality
+            document.getElementById('load-more-reviews').addEventListener('click', function() {
+                const hiddenReviews = document.querySelectorAll('.review-hidden');
+                if (hiddenReviews.length > 0) {
+                    // Show the next 2 reviews
+                    for (let i = 0; i < 2 && i < hiddenReviews.length; i++) {
+                        hiddenReviews[i].classList.remove('review-hidden');
+                    }
+                    
+                    // Hide the button if no more reviews to show
+                    if (document.querySelectorAll('.review-hidden').length === 0) {
+                        this.style.display = 'none';
+                    }
+                }
+            });
+        });
+        
+        // Initialize the page with home content visible
+        document.addEventListener('DOMContentLoaded', function() {
+            switchView('home-content');
+        });
+    </script>
+</body>
+</html>
